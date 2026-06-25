@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Bar</title>
+  <link rel="stylesheet" href="search bar.html">
+</head>
+<body>
+  <div class="container">
+    <h2>Search Items</h2>
+    <input
+      type="search"
+      id="searchInput"
+      class="search-box"
+      placeholder="Search here...">
+
+    <ul id="itemList">
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>Python</li>
+      <li>Java</li>
+      <li>PHP</li>
+      <li>MySQL</li>
+      <li>React</li>
+    </ul>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const items = document.querySelectorAll("#itemList li");
+
+    searchInput.addEventListener("keyup", function () {
+      let value = searchInput.value.toLowerCase();
+
+      items.forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(value)
+          ? "block"
+          : "none";
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Settings</title>
+<link rel="stylesheet" href="common.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="buffalofit.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="profile.html">Profile</a>
+    <a href="settings.html">Settings</a>
+    <a href="report.html">Reports</a>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="content">
+    <h2>Settings</h2>
+
+    <select id="theme">
+        <option>Light</option>
+        <option>Dark</option>
+    </select>
+
+    <label>
+        <input type="checkbox" id="notify"> Notifications
+    </label>
+</div>
+
+<script src="common.js"></script>
+
+<script>
+let key = "settings_" + localStorage.getItem("currentUser");
+
+let settings = JSON.parse(localStorage.getItem(key)) || {
+    theme: "Light",
+    notifications: true
+};
+
+document.getElementById("theme").value = settings.theme;
+document.getElementById("notify").checked = settings.notifications;
+
+document.getElementById("theme").onchange = function () {
+    settings.theme = this.value;
+    localStorage.setItem(key, JSON.stringify(settings));
+};
+
+document.getElementById("notify").onchange = function () {
+    settings.notifications = this.checked;
+    localStorage.setItem(key, JSON.stringify(settings));
+};
+</script>
+
+</body>
+</html>

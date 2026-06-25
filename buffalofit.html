@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BUFFALO fit</title>
+<link rel="stylesheet" href="style1.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="logo"><a href="buffalofit.html">BUFFALO fit</a></div>
+
+<ul class="nav-links" id="navLinks">
+<li><a href="buffalofit.html">Home</a></li>
+<li><a href="#content">About</a></li>
+<li><a href="Collection.html">Collection</a></li>
+<li><a href="contact.html">Contact</a></li>
+<li id="loginLink"><a href="login.html">Login</a></li>
+<li id="profileLink" class="hidden"><a href="profile.html">Profile</a></li>
+<li id="logoutLink" class="hidden"><a href="#" onclick="logout()">Logout</a></li>
+</ul>
+
+<div class="hamburger" onclick="toggleMenu()">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-text">
+<h2>Timeless Leather.<br>Fearless Style.</h2>
+<p><b>Premium jackets built to last.</b></p>
+<a href="Collection.html" class="btn">Shop</a>
+</div>
+</section>
+
+<section class="collection">
+<h2>Our Collection</h2>
+
+<div class="products">
+
+<div class="card" data-name="classic black jacket">
+        <img src="leather.jpg" alt="Black Leather Jacket">
+        <h3>Classic Black Jacket</h3>
+        <p>$120</p>
+        <button onclick="openProduct(1)">View Details</button>
+    </div>
+
+    <div class="card" data-name="brown rider jacket">
+        <img src="men.jpg" alt="Brown Leather Jacket">
+        <h3>Brown Rider Jacket</h3>
+        <p>$140</p>
+        <button onclick="openProduct(2)">View Details</button>
+    </div>
+
+    <div class="card" data-name="vintage leather jacket">
+        <img src="download.jpg" alt="Vintage Jacket">
+        <h3>Vintage Leather Jacket</h3>
+        <p>$160</p>
+        <button onclick="openProduct(3)">View Details</button>
+
+    </div>
+
+</div>
+</section>
+<div id="content"></div>
+<script>
+const products = {
+    1: {
+        name: "Classic Black Jacket",
+        price: 120,
+        img: "leather.jpg",
+        collection: "Leather Jackets"
+    },
+    2: {
+        name: "Brown Rider Jacket",
+        price: 140,
+        img: "men.jpg",
+        collection: "Leather Jackets"
+    },
+    3: {
+        name: "Vintage Leather Jacket",
+        price: 160,
+        img: "download.jpg",
+        collection: "Leather Jackets"
+    }
+};
+
+function openProduct(id) {
+    localStorage.setItem("selectedProduct", JSON.stringify(products[id]));
+    window.location.href = "product.html";
+}
+
+function searchProduct() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        let name = card.getAttribute("data-name");
+        card.style.display = name.includes(input) ? "block" : "none";
+    });
+}
+</script>
+
+<script>
+fetch("aboout.html")
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("content").innerHTML = data;
+  });
+</script>
+
+<footer>
+<p>© 2026 BUFFALO fit</p>
+</footer>
+
+<script>
+    function toggleMenu(){
+document.getElementById("navLinks").classList.toggle("active");
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+
+document.getElementById("loginLink").style.display = isLoggedIn ? "none" : "block";
+document.getElementById("profileLink").style.display = isLoggedIn ? "block" : "none";
+document.getElementById("logoutLink").style.display = isLoggedIn ? "block" : "none";
+});
+
+
+function logout(){
+localStorage.clear();
+window.location.href="login.html";
+}
+</script>
+
+</body>
+</html>

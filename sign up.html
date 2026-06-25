@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sign Up</title>
+<link rel="stylesheet" href="sign up.css">
+</head>
+<body>
+
+<div class="auth-container">
+    <h2>Sign Up</h2>
+
+    <form onsubmit="return signup()">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="email" id="email" placeholder="Email (must be @gmail.com)" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="password" id="confirm" placeholder="Confirm Password" required>
+        <button type="submit">Sign Up</button>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </form>
+</div>
+
+<script>
+function signup() {
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirm = document.getElementById("confirm").value.trim();
+
+    if(username === "" || email === "" || password === "" || confirm === "") {
+        alert("Please fill in all fields");
+        return false;
+    }
+
+    // check email contains '@gmail.com'
+    if(!email.endsWith("@gmail.com")) {
+        alert("Email must be a valid Gmail address (@gmail.com)");
+        return false;
+    }
+
+    if(password.length < 10) {
+        alert("Password must be at least 10 characters");
+        return false;
+    }
+
+    if(password !== confirm) {
+        alert("Passwords do not match");
+        return false;
+    }
+
+    localStorage.setItem("username", username);
+    localStorage.setItem("email", email);  // save email
+    localStorage.setItem("password", password);
+
+    alert("Account created successfully!");
+    window.location.href = "login.html";
+    return false;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login Page</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f5f5f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+form{
+    background:white;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    width:300px;
+    text-align:center;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#1a1a1a;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#444;
+}
+
+#result{
+    margin-top:10px;
+}
+</style>
+
+</head>
+<body>
+
+<form onsubmit="return login()">
+    <h2>Login</h2>
+
+    <input type="text" id="username" placeholder="Username" required>
+
+    <input type="password" id="password" placeholder="Password" required>
+
+    <p id="result"></p>
+
+    <button type="submit"><b>Login</b></button>
+
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+</form>
+
+<script>
+function login() {
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const result = document.getElementById("result");
+
+    if (username === "" || password === "") {
+        result.innerText = "Please fill in all fields";
+        result.style.color = "red";
+        return false;
+    }
+
+    const savedUsername = localStorage.getItem("username");
+    const savedPassword = localStorage.getItem("password");
+
+    if (username === savedUsername && password === savedPassword) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("user", username);
+
+        result.innerText = "Login Successful!";
+        result.style.color = "green";
+
+        setTimeout(()=>{
+            window.location.href = "Dashboard.html";
+        },1000);
+
+    } else {
+        result.innerText = "Invalid username or password";
+        result.style.color = "red";
+    }
+
+    return false;
+}
+</script>
+
+</body>
+</html>

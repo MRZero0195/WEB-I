@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BUFFALO fit</title>
+<link rel="stylesheet" href="style1.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="logo"><a href="buffalofit.html">BUFFALO fit</a></div>
+
+<ul class="nav-links" id="navLinks">
+<li><a href="buffalofit.html">Home</a></li>
+<li><a href="">About</a></li>
+<li><a href="#">Collection</a></li>
+<li><a href="#">Contact</a></li>
+<li id="loginLink"><a href="login.html">Login</a></li>
+<li id="profileLink" class="hidden"><a href="profile.html">Profile</a></li>
+<li id="logoutLink" class="hidden"><a href="#" onclick="logout()">Logout</a></li>
+</ul>
+
+<div class="hamburger" onclick="toggleMenu()">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-text">
+<h2>Timeless Leather.<br>Fearless Style.</h2>
+<p><b>Premium jackets built to last.</b></p>
+<a href="#" class="btn">Shop</a>
+</div>
+</section>
+
+<section class="collection">
+<h2>Our Collection</h2>
+
+<div class="products">
+
+<div class="card">
+<img src="leather.jpg">
+<h3>Black Jacket</h3>
+<p>$120</p>
+</div>
+
+<div class="card">
+<img src="men.jpg">
+<h3>Brown Jacket</h3>
+<p>$140</p>
+</div>
+
+<div class="card">
+<img src="download.jpg">
+<h3>Vintage Jacket</h3>
+<p>$160</p>
+</div>
+
+</div>
+</section>
+
+<footer>
+<p>© 2026 BUFFALO fit</p>
+</footer>
+
+<script>
+    function toggleMenu(){
+document.getElementById("navLinks").classList.toggle("active");
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+
+document.getElementById("loginLink").style.display = isLoggedIn ? "none" : "block";
+document.getElementById("profileLink").style.display = isLoggedIn ? "block" : "none";
+document.getElementById("logoutLink").style.display = isLoggedIn ? "block" : "none";
+});
+
+function logout(){
+localStorage.clear();
+window.location.href="login.html";
+}
+</script>
+
+</body>
+</html>

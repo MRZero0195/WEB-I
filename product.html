@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Details</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    padding: 40px;
+}
+
+.navbar {
+    display: flex;
+    width: 100%;
+    background: #1a1a1a;
+    color: white;
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.product-box {
+    max-width: 700px;
+    background: white;
+    margin: 100px auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+input, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+button {
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: auto;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="buffalofit.html" style="size: 100px;color:white;text-decoration:none;">BUFFALO fit</a>
+</nav>
+
+<div class="product-box">
+
+    <img id="productImg">
+    <h2 id="productName"></h2>
+    <p>$<span id="productPrice"></span></p>
+
+    <h3>Cart Items: <span id="cartCount">0</span></h3>
+
+    <h3>Order Now</h3>
+    <input type="text" id="customerName" placeholder="Your Name">
+    <input type="text" id="phone" placeholder="Phone Number">
+    <input type="text" id="address" placeholder="Address">
+
+    <button onclick="placeOrder()">Place Order</button>
+    <p id="orderMsg"></p>
+
+    <button onclick="addToCart()">Add to Cart</button>
+    <p id="cartMsg"></p>
+    <a href="cart.html" class="btn">Go to Cart</a>
+</div>
+
+<script>
+
+const product = JSON.parse(localStorage.getItem("selectedProduct"));
+
+if(product){
+    document.getElementById("productName").innerText = product.name;
+    document.getElementById("productPrice").innerText = product.price;
+    document.getElementById("productImg").src = product.img;
+}
+
+function addToCart() {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let newItem = {
+        name: document.getElementById("productName").innerText,
+        price: document.getElementById("productPrice").innerText,
+        img: document.getElementById("productImg").src
+    };
+
+    let exists = cart.find(item => item.name === newItem.name);
+    if (exists) {
+        document.getElementById("cartMsg").innerText = "Already in cart!";
+        return;
+    }
+
+    cart.push(newItem);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    document.getElementById("cartMsg").innerText = "Added to Cart!";
+    updateCartCount();
+}
+
+function placeOrder() {
+    const name = document.getElementById("customerName").value;
+    const phone = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
+
+    const msg = document.getElementById("orderMsg");
+
+    if (!name || !phone || !address) {
+        msg.innerText = "Fill all fields";
+        msg.style.color = "red";
+        return;
+    }
+
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    orders.push({
+        customerName: name,
+        phone,
+        address,
+        product: product.name,
+        price: product.price
+    });
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    msg.innerText = "Order Placed!";
+    msg.style.color = "green";
+}
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cartCount").innerText = cart.length;
+}
+
+window.onload = updateCartCount;
+
+</script>
+
+</body>
+</html>
